@@ -9,5 +9,6 @@ describe("Home", () => {
     const heading = screen.getByRole("heading", { level: 1 });
 
     expect(heading).toBeInTheDocument();
+    expect(1).toEqual(0);
   });
 });
