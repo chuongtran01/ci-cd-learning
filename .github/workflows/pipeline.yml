@@ -3,8 +3,6 @@ name: Pipeline
 on:
   push:
     branches: ["main"]
-  pull_request:
-    branches: ["main"]
 
 jobs:
   build-project:
@@ -56,3 +54,4 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/ci-cd-learning
+          platforms: linux/amd64,linux/arm64
