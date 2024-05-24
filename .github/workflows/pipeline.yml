@@ -60,7 +60,7 @@ jobs:
   deploy:
     name: Deploy
 
-    needs: build-project
+    needs: docker-build-push
 
     runs-on: ubuntu-latest
 
