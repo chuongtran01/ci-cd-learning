@@ -57,24 +57,24 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/ci-cd-learning
 
-deploy:
-  name: Deploy
+  deploy:
+    name: Deploy
 
-  needs: build-project
+    needs: build-project
 
-  runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-  steps:
-    - uses: actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v4
 
-    - name: Deploy to EC2 instance
-      uses: appleboy/ssh-action@v1.0.3
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USERNAME }}
-        key: ${{ secrets.EC2_KEY }}
-        script: |
-          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }} &&
-          docker ps -aq | xargs docker stop | xargs docker rm &&
-          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/ci-cd-learning
-          docker run -d -p 3000:3000 ${{ secrets.DOCKERHUB_USERNAME }}/ci-cd-learning
+      - name: Deploy to EC2 instance
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }} &&
+            docker ps -aq | xargs docker stop | xargs docker rm &&
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/ci-cd-learning
+            docker run -d -p 3000:3000 ${{ secrets.DOCKERHUB_USERNAME }}/ci-cd-learning
